@@ -38,9 +38,8 @@ commodities = data.commodities.values()
 for commodity in commodities:
     if commodity.mnemonic == "":
         continue
-    out.write("commodity %s\n" % format_commodity(commodity))
-    if commodity.fullname != "":
-        out.write("\tnote %s\n" % no_nl(commodity.fullname))
+    out.write("commodity 1,000.{0} {1}\n".format('0' * commodity.precision,
+                                                 format_commodity(commodity)))
 out.write("\n")
 
 accounts = data.accounts.values()
