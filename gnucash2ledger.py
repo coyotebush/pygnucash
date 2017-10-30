@@ -69,7 +69,7 @@ for price in prices:
 out.write("\n")
 
 transactions = data.transactions.values()
-transactions.sort(key=lambda x: x.post_date)
+transactions.sort(key=lambda x: (x.post_date, x.enter_date))
 for trans in transactions:
     date = trans.post_date.strftime("%Y/%m/%d")
     code = "(%s) " % no_nl(trans.num.replace(")", "")) if trans.num else ""

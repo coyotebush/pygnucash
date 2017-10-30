@@ -117,12 +117,13 @@ def read_data(connection):
     def parse_time(time):
         return datetime.strptime(time, "%Y%m%d%H%M%S")
 
-    for row in c.execute('SELECT guid, currency_guid, num, post_date, description FROM transactions'):
-        guid, currency_guid, num, post_date, description = row
+    for row in c.execute('SELECT guid, currency_guid, num, post_date, enter_date, description FROM transactions'):
+        guid, currency_guid, num, post_date, enter_date, description = row
         trans = get_transaction(data, guid)
         trans.currency = get_commodity(data, currency_guid)
         trans.num = num
         trans.post_date = parse_time(post_date)
+        trans.enter_date = parse_time(enter_date)
         trans.description = description
 
     for row in c.execute('SELECT guid, tx_guid, account_guid, memo, value_num, value_denom, quantity_num, quantity_denom FROM splits'):
