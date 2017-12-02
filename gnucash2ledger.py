@@ -42,13 +42,12 @@ for commodity in commodities:
                                                  format_commodity(commodity)))
 out.write("\n")
 
-accounts = data.accounts.values()
+accounts = [acc for acc in data.accounts.values()
+            # ignore "dummy" accounts
+            if acc.type is not None and acc.type != "ROOT"
+            and str(acc.commodity) != "template"]
+accounts.sort(key=full_acc_name)
 for acc in accounts:
-    # ignore "dummy" accounts
-    if acc.type is None or acc.type == "ROOT":
-        continue
-    if str(acc.commodity) == "template":
-        continue
     out.write("account %s\n" % (full_acc_name(acc), ))
     if acc.description != "":
         out.write("\tnote %s\n" % (no_nl(acc.description),))
